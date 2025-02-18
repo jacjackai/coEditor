@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f8f9fa;
+    overflow: hidden; /* 确保无底部滚动条 */
+}
+
+/* 核心容器 */
+.wrapper {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.editor-container {
+    display: flex;
+    height: calc(100vh - 76px); /* 精准高度计算 */
+    padding: 0 20px 20px 20px;
+    gap: 15px;
+    overflow-x: auto;  /* 允许水平滚动 */
+    flex-wrap: nowrap;
+    align-items: stretch;
+    scroll-padding-right: 140px; /* 右侧留白防止按钮遮挡 */
+}
+
+/* 分栏样式 */
+.column {
+    flex: 0 0 300px;      /* 定宽分栏 */
+    height: 100%;
+    min-height: 100%;     /* 最小高度填充 */
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--col-bg, #fff);
+    overflow-y: auto;
+    cursor: grab;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.15s ease;
+}
+
+.column.dragging {
+    opacity: 0.6;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+/* 悬停效果 */
+.editor-container::before,
+.editor-container::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.editor-container::before {
+  left: -10px;
+}
+
+.editor-container::after {
+  right: -10px;
+}
+
+.editor-container:hover::before,
+.editor-container:hover::after {
+  opacity: 1;
+}
+
+/* 默认分栏 */
+.editor-container .default-column {
+  margin-right: 20px; /* 为悬停区域留出空间 */
+}
